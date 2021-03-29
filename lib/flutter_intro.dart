@@ -224,7 +224,7 @@ class Intro {
                         height: _widgetHeight,
                         left: _widgetOffset!.dx,
                         top: _widgetOffset!.dy,
-                        backgroundColor: null,
+                        backgroundBlendMode: BlendMode.dst,
                         borderRadiusGeometry: _configMap[_currentStepIndex]
                                 ['borderRadius'] ??
                             borderRadius,
