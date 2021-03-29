@@ -154,11 +154,12 @@ class Intro {
     required double top,
     double? bottom,
     double? right,
+    Color? backgroundColor = Colors.white,
     BorderRadiusGeometry? borderRadiusGeometry,
     Widget? child,
   }) {
     final decoration = BoxDecoration(
-      color: Colors.white,
+      color: backgroundColor,
       backgroundBlendMode: backgroundBlendMode,
       borderRadius: borderRadiusGeometry,
     );
@@ -223,6 +224,7 @@ class Intro {
                         height: _widgetHeight,
                         left: _widgetOffset!.dx,
                         top: _widgetOffset!.dy,
+                        backgroundColor: null,
                         borderRadiusGeometry: _configMap[_currentStepIndex]
                                 ['borderRadius'] ??
                             borderRadius,
