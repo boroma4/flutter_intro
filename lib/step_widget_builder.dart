@@ -75,9 +75,14 @@ class StepWidgetBuilder {
   /// the parameters are the current page index and the total number of pages in sequence.
   static Widget Function(StepWidgetParams params) useDefaultTheme({
     required List<String> texts,
+    required TextStyle textStyle,
     required String Function(int currentStepIndex, int stepCount)
         buttonTextBuilder,
     bool maskClosable = false,
+    double distanceToButton = 12,
+    double buttonFontSize = 12,
+    double buttonHeight = 28,
+    double buttonHorizontalPadding = 8,
   }) {
     return (StepWidgetParams stepWidgetParams) {
       int currentStepIndex = stepWidgetParams.currentStepIndex;
@@ -117,18 +122,13 @@ class StepWidgetBuilder {
                           ? ''
                           : texts[currentStepIndex],
                       softWrap: true,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        height: 1.4,
-                        color: Colors.white,
-                      ),
+                      style: textStyle,
                     ),
                     SizedBox(
-                      height: 12,
+                      height: distanceToButton,
                     ),
                     SizedBox(
-                      height: 28,
+                      height: buttonHeight,
                       child: OutlinedButton(
                         style: ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(
@@ -146,7 +146,7 @@ class StepWidgetBuilder {
                               MaterialStateProperty.all<EdgeInsetsGeometry>(
                             EdgeInsets.symmetric(
                               vertical: 0,
-                              horizontal: 8,
+                              horizontal: buttonHorizontalPadding,
                             ),
                           ),
                           shape: MaterialStateProperty.all<OutlinedBorder>(
@@ -159,7 +159,7 @@ class StepWidgetBuilder {
                         child: Text(
                           buttonTextBuilder(currentStepIndex, stepCount),
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: buttonFontSize,
                           ),
                         ),
                       ),
