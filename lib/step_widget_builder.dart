@@ -76,6 +76,7 @@ class StepWidgetBuilder {
   static Widget Function(StepWidgetParams params) useDefaultTheme({
     required List<String> texts,
     required TextStyle textStyle,
+    required Function onDone,
     required String Function(int currentStepIndex, int stepCount)
         buttonTextBuilder,
     bool maskClosable = false,
@@ -83,6 +84,7 @@ class StepWidgetBuilder {
     double buttonFontSize = 12,
     double buttonHeight = 28,
     double buttonHorizontalPadding = 8,
+    double buttonBorderWidth = 1,
   }) {
     return (StepWidgetParams stepWidgetParams) {
       int currentStepIndex = stepWidgetParams.currentStepIndex;
@@ -95,11 +97,16 @@ class StepWidgetBuilder {
         offset: offset,
       );
 
+      void finish() {
+        onDone();
+        stepWidgetParams.onFinish();
+      }
+
       return GestureDetector(
         onTap: () {
           if (maskClosable) {
             if (stepCount - 1 == currentStepIndex) {
-              stepWidgetParams.onFinish();
+              finish();
             } else {
               if (stepWidgetParams.onNext != null) {
                 stepWidgetParams.onNext!();
@@ -140,6 +147,7 @@ class StepWidgetBuilder {
                           side: MaterialStateProperty.all<BorderSide>(
                             BorderSide(
                               color: Colors.white,
+                              width: buttonBorderWidth,
                             ),
                           ),
                           padding:
@@ -154,7 +162,7 @@ class StepWidgetBuilder {
                           ),
                         ),
                         onPressed: stepCount - 1 == currentStepIndex
-                            ? stepWidgetParams.onFinish
+                            ? finish
                             : stepWidgetParams.onNext,
                         child: Text(
                           buttonTextBuilder(currentStepIndex, stepCount),
